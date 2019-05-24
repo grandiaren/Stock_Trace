@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="GetSZStockListAction">
+
+	<insert id="insertStockList">
+
+		insert into stock_list values
+		(#{stock_market},#{stock_code},#{stock_name},#{stock_symbol},#{price_change},#{change_percent},#{turn_over_ratio},#{market_cap})
+
+	</insert>
+
+</mapper>

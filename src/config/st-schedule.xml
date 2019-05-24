@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jump="http://www.bocom.com/schema/jump-core" xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-2.0-m1.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+	<bean id="TimeOrderAction" class="com.grandia.st.action.timer.TimeOrderAction" />
+
+	<!-- TimeOrderAction -->
+	<bean id="TimeOrderJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="TimeOrderAction" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="TimeOrderTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="TimeOrderJobDetail" />
+		<property name="cronExpression" value="0 0 17 * * ?" />
+	</bean>
+
+	<bean name="triggerManager"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="TimeOrderTimer" />
+			</list>
+		</property>
+	</bean>
+
+</beans>

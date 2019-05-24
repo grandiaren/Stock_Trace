@@ -1,0 +1,79 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jump="http://www.bocom.com/schema/jump-core"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-2.0-m1.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+						
+	<bean class="com.bocom.jump.bp.channel.http.ServletURIEndpointMapping">
+		
+		<property name="mapping">
+		
+			<map>	
+													
+				<entry key="/**/*.json" value-ref="httpJsonEndpoint" />
+						
+			</map>
+			
+		</property>	
+				
+	</bean>
+
+	<bean id="httpJsonEndpoint"	class="com.bocom.jump.bp.channel.DefaultEndpoint">
+	
+		<property name="interceptors">
+		
+			<array>
+			
+				<bean class="com.bocom.jump.bp.channel.http.interceptors.StreamPayloadChannelInterceptor">
+				
+					<property name="extractIdentityFromURI"	value="true"/>
+					
+					<property name="streamResolver">
+
+						<bean class="com.bocom.jump.bp.channel.http.interceptors.JsonStreamResolver"/>
+						
+					</property>
+					
+				</bean>
+				
+				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
+
+					<property name="encodeTransforms">
+					
+						<array>
+						
+							<bean class="com.bocom.jump.bp.channel.http.interceptors.JsonReportEncoder"/>
+							
+							<bean class="com.bocom.jump.bp.channel.http.interceptors.JsonEncoder"/>
+							
+						</array>
+						
+					</property>
+					
+					<property name="decodeTransforms">
+						
+						<array>
+						
+							<bean class="com.bocom.jump.bp.channel.http.interceptors.JsonDecoder"/>
+							
+							<bean class="com.bocom.jump.bp.channel.http.interceptors.JsonReportDecoder"/>
+						
+						</array>
+					
+					</property>
+				
+				</bean>
+
+				<bean class="com.bocom.jump.bp.channel.http.interceptors.ServletContextInterceptor"/>	
+
+			</array>
+
+		</property>
+
+	</bean>
+
+</beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="WorkingDayUtils">
+
+	<select id="queryHolidaySequence" resultType="java.lang.String">
+
+		select holiday_sequence from holiday_param where year=#{year} and
+		month=#{month}
+
+	</select>
+
+</mapper>

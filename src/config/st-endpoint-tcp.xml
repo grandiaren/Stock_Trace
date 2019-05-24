@@ -1,0 +1,55 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:jump="http://www.bocom.com/schema/jump-core"
+	xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-2.0-m1.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+	<!-- ======================================== -->
+	<!-- TCP CHANNEL COMMON CONFIG -->
+	<!-- ======================================== -->
+	<bean id="CPSS_TCPSERVER" class="com.bocom.jump.bp.channel.tcp.SocketServer" destroy-method="destroy">
+
+		<property name="port" value="50010" />
+
+		<property name="mapping" ref="CPSS_TCPMAPPING" />
+
+		<property name="threadPool" ref="CPSS_THREADPOOL" />
+
+	</bean>
+
+	<bean id="CPSS_TCPMAPPING" class="com.bocom.jump.bp.channel.tcp.SocketURIEndpointMapping">
+
+		<property name="default" ref="CPSS_TCPENDPOINT" />
+
+	</bean>
+
+	<bean id="CPSS_TCPENDPOINT" class="com.bocom.jump.bp.channel.DefaultEndpoint">
+
+		<property name="interceptors">
+
+			<array>
+
+				<bean class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
+
+					<property name="lengthSize" value="8" />
+
+				</bean>
+
+				<bean class="com.grandia.st.frame.STOCKTcpInterceptor" />
+
+			</array>
+
+		</property>
+
+	</bean>
+
+	<bean id="CPSS_THREADPOOL" class="com.bocom.jump.bp.util.Jdk15ThreadPool" destroy-method="shutdown">
+
+		<property name="name" value="CPSS_TCPSERVER" />
+
+		<property name="poolSize" value="10" />
+
+	</bean>
+
+
+</beans>

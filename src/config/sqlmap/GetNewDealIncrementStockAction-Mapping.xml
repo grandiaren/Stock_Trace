@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="GetNewDealIncrementStockAction">
+
+	<select id="queryDealIncreStockList" resultType="java.util.HashMap">
+
+		select a.* from
+		(
+			(select stock_market, stock_symbol, stock_name, deal_date, cast(deal_amount as SIGNED) as deal_amount, 
+			price, change_percent, market_cap from 
+			stock_deal_info where
+			deal_date = #{dealdate}) as a,
+			(select stock_symbol, deal_date, cast(deal_amount as SIGNED) as deal_amount from
+			stock_deal_info where 
+			deal_date = #{preWorkingDay}) as b
+		) where
+		a.stock_symbol = b.stock_symbol 
+		and a.deal_amount > (7 * b.deal_amount) 
+		and cast(a.change_percent as SIGNED) > 0 
+		and b.deal_amount > 0
+
+	</select>
+
+	<insert id="insertDealIncreStockInfo">
+
+		insert into deal_incre_stock_info 
+		(stock_market, stock_symbol, stock_name, status, deal_date,
+		deal_amount, market_cap, price, change_percent)
+		values (#{stock_market}, #{stock_symbol}, #{stock_name}, #{status},
+		#{deal_date}, #{deal_amount}, #{market_cap}, #{price}, #{change_percent})
+
+	</insert>
+	
+	<select id="queryExistInfo" resultType="java.lang.Integer">
+
+		select count(*) from deal_incre_stock_info
+		where stock_market = #{stock_market}
+		and stock_symbol = #{stock_symbol}
+		and status = #{status}
+
+	</select>
+	
+	<select id="queryDealDate" resultType="java.lang.Integer">
+
+		select count(*) from stock_deal_info
+		where stock_market = #{stock_market}
+		and stock_symbol = #{stock_symbol}
+
+	</select>
+
+</mapper>

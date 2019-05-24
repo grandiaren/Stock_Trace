@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="TraceDealIncrementStockLargeDealAction">
+
+	<select id="queryNewDealIncreStockList" resultType="java.util.HashMap">
+
+		select * from deal_incre_stock_info_large_deal
+		where status = 'O'
+		and buy_date is null
+		and deal_date <![CDATA[<]]> #{dealdate}
+
+	</select>
+	
+	<select id="queryStockDealInfo" resultType="java.util.HashMap">
+
+		select open_price, price, high_price, low_price, change_percent 
+		from stock_deal_info 
+		where stock_market = #{stock_market}
+		and stock_symbol = #{stock_symbol}
+		and deal_date = #{dealdate}
+
+	</select>
+
+	<update id="updateNewDealIncreStockInfo">
+	
+		update deal_incre_stock_info_large_deal set 
+			buy_date = #{buy_date}, buy_price = #{buy_price}, hold_price = #{hold_price},
+			hold_change_precent = #{hold_change_precent}, record_date = #{record_date}, status = #{newStatus}
+		where stock_market = #{stock_market}
+		and stock_symbol = #{stock_symbol}
+		and status = #{status}
+		and deal_date = #{deal_date}
+	
+	</update>
+	
+	<select id="queryDealIncreStockList" resultType="java.util.HashMap">
+
+		select * from deal_incre_stock_info_large_deal
+		where status = 'O'
+		and buy_date is not null
+		and record_date <![CDATA[<]]> #{dealdate}
+
+	</select>
+	
+	<update id="updateDealIncreStockInfo">
+	
+		update deal_incre_stock_info_large_deal set 
+			status = #{newStatus}, hold_price = #{hold_price},
+			hold_change_precent = #{hold_change_precent}, record_date = #{record_date}
+		where stock_market = #{stock_market}
+		and stock_symbol = #{stock_symbol}
+		and status = #{status}
+		and deal_date = #{deal_date}
+	
+	</update>
+
+</mapper>
