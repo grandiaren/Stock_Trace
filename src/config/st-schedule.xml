@@ -12,39 +12,59 @@
 	<bean id="DealingTimeOrderAction" class="com.grandia.st.action.timer.DealingTimeOrderAction" />
 
 	<!-- TimeOrderAction -->
-	<bean id="TimeOrderJobDetail"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<bean id="TimeOrderJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	
 		<property name="targetObject" ref="TimeOrderAction" />
+		
 		<property name="targetMethod" value="execute" />
+		
 		<property name="concurrent" value="false" />
+		
 	</bean>
 	
 	<bean id="TimeOrderTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	
 		<property name="jobDetail" ref="TimeOrderJobDetail" />
+		
 		<property name="cronExpression" value="0 30 15 * * ?" />
+		
 	</bean>
 	
 	<!-- TimeOrderAction -->
-	<bean id="DealingTimeOrderJobDetail"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<bean id="DealingTimeOrderJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	
 		<property name="targetObject" ref="DealingTimeOrderAction" />
+		
 		<property name="targetMethod" value="execute" />
+		
 		<property name="concurrent" value="false" />
+		
 	</bean>
 	
 	<bean id="DealingTimeOrderTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	
 		<property name="jobDetail" ref="DealingTimeOrderJobDetail" />
+		
 		<property name="cronExpression" value="0 45 14 * * ?" />
+		
 	</bean>
 
-	<bean name="triggerManager"
-		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<bean name="triggerManager" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	
 		<property name="triggers">
+		
 			<list>
+			
 				<ref bean="TimeOrderTimer" />
+				
 				<ref bean="DealingTimeOrderTimer" />
+				
 			</list>
+			
 		</property>
+		
+		<property name="waitForJobsToCompleteOnShutdown" value="true"/>
+		
 	</bean>
 
 </beans>
