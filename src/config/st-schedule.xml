@@ -8,6 +8,8 @@
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
 	<bean id="TimeOrderAction" class="com.grandia.st.action.timer.TimeOrderAction" />
+	
+	<bean id="DealingTimeOrderAction" class="com.grandia.st.action.timer.DealingTimeOrderAction" />
 
 	<!-- TimeOrderAction -->
 	<bean id="TimeOrderJobDetail"
@@ -19,7 +21,20 @@
 	
 	<bean id="TimeOrderTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="TimeOrderJobDetail" />
-		<property name="cronExpression" value="0 0 17 * * ?" />
+		<property name="cronExpression" value="0 30 15 * * ?" />
+	</bean>
+	
+	<!-- TimeOrderAction -->
+	<bean id="DealingTimeOrderJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="DealingTimeOrderAction" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="DealingTimeOrderTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="DealingTimeOrderJobDetail" />
+		<property name="cronExpression" value="0 45 14 * * ?" />
 	</bean>
 
 	<bean name="triggerManager"
@@ -27,6 +42,7 @@
 		<property name="triggers">
 			<list>
 				<ref bean="TimeOrderTimer" />
+				<ref bean="DealingTimeOrderTimer" />
 			</list>
 		</property>
 	</bean>

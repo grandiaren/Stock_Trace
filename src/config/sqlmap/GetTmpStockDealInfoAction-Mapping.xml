@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+  "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="GetTmpStockDealInfoAction">
+
+	<select id="queryStockList" resultType="java.util.HashMap">
+
+		select * from stock_list
+
+	</select>
+
+	<insert id="insertTmpStockDealInfo">
+
+		insert into stock_deal_tmp_info values
+		(#{stock_market},#{stock_symbol},#{stock_name},#{deal_date},#{deal_time},#{price_change},#{change_percent},#{turn_over_ratio},#{market_cap},#{open_price},#{old_end_price},#{price},#{high_price},#{low_price},#{CA_buy_price},#{CA_sell_price},#{deal_share},#{deal_amount},#{first_buy_share},#{first_buy_price},#{second_buy_share},#{second_buy_price},#{third_buy_share},#{third_buy_price},#{fourth_buy_share},#{fourth_buy_price},#{fifth_buy_share},#{fifth_buy_price},#{first_sell_share},#{first_sell_price},#{second_sell_share},#{second_sell_price},#{third_sell_share},#{third_sell_price},#{fourth_sell_share},#{fourth_sell_price},#{fifth_sell_share},#{fifth_sell_price})
+
+	</insert>
+	
+	<delete id="clearStockList">
+
+		delete from stock_deal_tmp_info
+
+	</delete>
+
+</mapper>

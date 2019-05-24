@@ -11,4 +11,10 @@
 	
 	<bean class="com.grandia.st.util.STOCKFactorySql" />
 	
+	<bean id="threadPoolTask" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" destroy-method="shutdown">  
+    	<property name="corePoolSize" value="20" />  
+    	<property name="maxPoolSize" value="40" />  
+    	<property name="queueCapacity" value="1000" />  
+	</bean>
+	
 </beans>

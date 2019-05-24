@@ -6,24 +6,24 @@
 						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
-	<process id="TimeOrderProcess" template="SimpleTemplate" interceptors="defaultInterceptors">
+	<process id="GetTmpStockDealInfoProcess" template="SimpleTemplate" interceptors="defaultInterceptors">
 
 		<actions>
 
-			<action id="stExecute" class="com.grandia.st.action.timer.TimeOrderAction" operations="execute" />
+			<action id="stExecute" class="com.grandia.st.action.dealing.GetTmpStockDealInfoAction" operations="execute" />
 
 		</actions>
 
 	</process>
 	
-	<process id="DealingTimeOrderProcess" template="SimpleTemplate" interceptors="defaultInterceptors">
+	<process id="GetTmpDealIncrementStockProcess" template="SimpleTemplate" interceptors="defaultInterceptors">
 
 		<actions>
 
-			<action id="stExecute" class="com.grandia.st.action.timer.DealingTimeOrderAction" operations="execute" />
+			<action id="stExecute" class="com.grandia.st.action.dealing.GetTmpDealIncrementStockAction" operations="execute" />
 
 		</actions>
 
 	</process>
-	
+
 </x:beans>
