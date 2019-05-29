@@ -7,7 +7,7 @@
 
 	<select id="queryStockList" resultType="java.util.HashMap">
 
-		select * from stock_list
+		select stock_market, stock_code, stock_name, stock_symbol, turn_over_ratio, market_cap from stock_list
 
 	</select>
 

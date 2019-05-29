@@ -1,5 +1,6 @@
 package com.grandia.st.action.dealing;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,19 @@ public class GetTmpStockDealInfoTask extends Object implements Callable<Object> 
 				resultMap.put(resultKeyArr[ix], resultArr[ix]);
 
 			}
+
+			BigDecimal currentPrice = new BigDecimal((String) resultMap.get("price"));
+
+			BigDecimal oldEndPrice = new BigDecimal((String) resultMap.get("old_end_price"));
+
+			BigDecimal priceChange = currentPrice.subtract(oldEndPrice);
+
+			BigDecimal percentChange = priceChange.multiply(new BigDecimal(100)).divide(oldEndPrice, 3,
+					BigDecimal.ROUND_HALF_UP);
+
+			resultMap.put("price_change", priceChange.toString());
+
+			resultMap.put("change_percent", percentChange.toString());
 
 			resultMap.putAll((Map) requestMap);
 

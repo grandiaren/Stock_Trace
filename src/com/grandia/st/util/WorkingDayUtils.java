@@ -1,5 +1,6 @@
 package com.grandia.st.util;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -176,7 +177,19 @@ public class WorkingDayUtils {
 
 		String testStr = "2017-03-27";
 
-		System.out.println("result1:" + getCronExpression(20));
+//		System.out.println("result1:" + getCronExpression(20));
+
+		BigDecimal currentPrice = new BigDecimal("14.780");
+
+		BigDecimal oldEndPrice = new BigDecimal("13.900");
+
+		BigDecimal priceChange = currentPrice.subtract(oldEndPrice);
+
+		BigDecimal percentChange = priceChange.multiply(new BigDecimal(100)).divide(oldEndPrice, 3,
+				BigDecimal.ROUND_HALF_UP);
+
+		System.out.println("currentPrice: " + currentPrice.toString() + " oldEndPrice: " + oldEndPrice.toString()
+				+ " priceChange: " + priceChange.toString() + " percentChange: " + percentChange.toString());
 
 		// System.out.println("result1:" +
 		// testStr.replaceAll("\\<\\?[^<\\]]+\\?\\>", ""));

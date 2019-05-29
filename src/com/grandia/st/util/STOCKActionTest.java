@@ -8,9 +8,9 @@ import com.grandia.st.common.STOCKConstant;
 
 public class STOCKActionTest {
 
-//	private String url = "http://localhost:8080/STOCK_TRACE/";
+	private String url = "http://localhost:8080/STOCK_TRACE/";
 	
-	private String url = "http://139.196.127.33:8080/STOCK_TRACE/";
+//	private String url = "http://139.196.127.33:8080/STOCK_TRACE/";
 
 	@SuppressWarnings("rawtypes")
 	private HashMap caseParam = new HashMap();
