@@ -48,12 +48,13 @@ public class GetSHStockListAction extends STOCKCommonAction implements Action {
 
 				endFlag = true;
 
-			} else if (Integer.parseInt(resultMap.get("totalCount").toString()) == page
-					* Integer.parseInt(resultMap.get("num").toString())) {
-
-				endFlag = true;
-
-			}
+			} 
+//			else if (Integer.parseInt(resultMap.get("totalCount").toString()) == page
+//					* Integer.parseInt(resultMap.get("num").toString())) {
+//
+//				endFlag = true;
+//
+//			}
 
 			for (HashMap listMem : resultList) {
 
